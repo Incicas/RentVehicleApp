@@ -9,14 +9,14 @@ public class MySqlAccess {
     private ResultSet resultSet = null;
 
     public void setConnection() throws SQLException {
-        this.connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sql_store","root", "Incicas.123");
+        this.connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/car_rental","root", "Incicas.123");
         this.statement = connect.createStatement();
     }
 
     //START OF CRUD OPERATIONS
     public void create() throws SQLException {
         setConnection();
-        String insertSqlQuery = "INSERT INTO customers (customer_id, first_name, last_name, address, city, state, points) values (default, 'Beniamin','Incicas','nr 172', 'Sintea Mare', 'RO', 1500)";
+        String insertSqlQuery = "INSERT INTO customers (customer_id, first_name, last_name, phone_number) values (default, 'Beniamin','Incicas','0767625580')";
         preparedStatement = connect.prepareStatement(insertSqlQuery);
         int rowsInserted = statement.executeUpdate(insertSqlQuery);
         System.out.println(rowsInserted + " rows updated");
@@ -35,14 +35,11 @@ public class MySqlAccess {
         while (resultSet.next()) {
             String first_name = resultSet.getString("first_name");
             String last_name = resultSet.getString(3);
-            String birth_date = resultSet.getString("birth_date");
-            String address = resultSet.getString("address");
-            String city = resultSet.getString("city");
-            String state = resultSet.getString("state");
-            int points = resultSet.getInt("points");
+            String phone_number = resultSet.getString("phone_number");
 
-            String output = "User:  " + first_name + " , " + last_name + " , " + birth_date + " , " + address + " , " + city + ", "+state+" , "+points+";";
-            System.out.printf((output) + "%n", first_name, last_name, birth_date, address, city, state, points);
+
+            String output = "User:  " + first_name + " , " + last_name + " , " + phone_number;
+            System.out.printf((output) + "%n", first_name, last_name, phone_number);
         }
         System.out.println();
     }
